@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <!-- Your CSS here -->
+  <style>
+    .card {
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+      transition: 0.3s;
+      width: 40%;
+      border-radius: 5px;
+      margin: auto;
+      text-align: center;
+      margin-top: 50px;
+    }
+  
+    .card input {
+      margin-top: 20px;
+    }
+  
+    .card .top-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .card img {
+      width: 50%;
+      /* Adjust as needed */
+      height: auto;
+      /* Maintain aspect ratio */
+      margin-top: 10px;
+      /* Space between search bar and image */
+    }
+  
+    .container {
+      padding: 2px 16px;
+    }
+  
+    .details {
+      display: flex;
+      justify-content: space-between;
+    }
+  </style>
+  <title>Weather app</title>
+</head>
+
+<body>
+
+  <div class="card">
+    <div class="top-section">
+      <input id="search" type="text" placeholder="Search..">
+      <button onclick="getWeather()">Search</button>
+      <h3 id="city">New York</h3>
+      <img id="weather-icon" src="./clouds.png" alt="Weather image">
+    </div>
+    <div class="container">
+      <h4 id="temperature"><b>16°C</b></h4>
+      <p id="description">Few Clouds</p>
+      <div class="details">
+        <p id="humidity">89% Humidity</p>
+        <p id="wind-speed">1Km/h Wind Speed</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    async function getWeather() {
+      const city = document.getElementById('search').value;
+      const response = await fetch(`/weather?city=${city}`);
+      const data = await response.json();
+      document.getElementById('city').innerText = data.name;
+      document.getElementById('temperature').innerText = `${data.main.temp}°C`;
+      document.getElementById('description').innerText = data.weather[0].description;
+      document.getElementById('humidity').innerText = `${data.main.humidity}% Humidity`;
+      document.getElementById('wind-speed').innerText = `${data.wind.speed}Km/h Wind Speed`;
+      document.getElementById('weather-icon').src = `http://openweathermap.org/img/w/${data.weather[0].icon}.png`;
+    }
+  </script>
+
+</body>
+
+</html>
+
+
+
+
+
